@@ -24,6 +24,8 @@ Auth
 
 상품목록
 
+결제
+
 ```
 
 ## Project setup

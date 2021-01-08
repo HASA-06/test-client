@@ -187,6 +187,25 @@ export default class App extends Vue {
         },
       ],
     },
+    {
+      icon: 'mdi-alpha-w-circle',
+      text: '결제',
+      model: false,
+      children: [
+        {
+          icon: 'mdi-alpha-t-circle',
+          text: '토큰',
+          router: '/payment/token',
+          model: false,
+        },
+        {
+          icon: 'mdi-format-list-bulleted',
+          text: '상태별 목록',
+          router: '/payment/payment-list',
+          model: false,
+        },
+      ],
+    },
   ];
 
   /*
@@ -194,6 +213,7 @@ export default class App extends Vue {
   */
   // Page lifecycle
   created() {
+    console.log('created');
     const tokenDatas = {
       accessToken: this.$cookies.get('access_token'),
       refreshToken: this.$cookies.get('refresh_token'),

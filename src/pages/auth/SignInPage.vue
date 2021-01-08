@@ -102,7 +102,7 @@ export default class SignInPage extends Vue {
   // Data management
   async saveToken(tokenDatas: any) {
     this.$store.commit("setAuth", tokenDatas);
-    this.$cookies.set("access_token", tokenDatas.accessToken, 60 * 5, '/');
+    this.$cookies.set("access_token", tokenDatas.accessToken, 60 * 30, '/');
     this.$cookies.set("refresh_token", tokenDatas.refreshToken, 60 * 60 * 24 * 30, '/');
 
     router.push({

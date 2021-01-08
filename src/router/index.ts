@@ -5,6 +5,7 @@ import Home from '../pages/HomePage.vue';
 import AuthRouter from '../router/AuthRouter';
 import MeatRouter from '../router/MeatRouter';
 import CommunityRouter from '../router/CommunityRouter';
+import PaymentRouter from '../router/PaymentRouter';
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,7 @@ const routes = baseRoutes.concat(
   AuthRouter,
   MeatRouter,
   CommunityRouter,
+  PaymentRouter,
 );
 
 const router = new VueRouter({
