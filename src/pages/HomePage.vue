@@ -35,15 +35,19 @@
     </v-tabs>
     <v-card class="elevation-0" width="100%" height="500px">
       <video
-        class="VideoItem"
-        ref="Player"
+        class="video-player"
+        ref="videoPlayer"
         :src="mainVideo"
+        :poster="videoThumbnail"
         muted
+        autoplay
         :loop="true"
         :playsinline="true"
         controlsList="nodownload"
-        oncontextmenu="return false;"
-      />
+        width="640"
+        height="300"
+      >
+      </video>
     </v-card>
   </v-container>
 </template>
@@ -78,8 +82,21 @@ export default class HomePage extends Vue {
   private mainImage1 = 'https://cdn.clien.net/web/api/file/F01/4600276/3a10d00f818448f08a6.GIF?w=230&h=150&gif=true';
   private mainImage2 = 'https://file3.instiz.net/data/file3/2018/03/02/6/b/0/6b0eda40828ccfd4a67019986da38a43.gif';
   private mainImage3 = 'https://th2.tmon.kr/thumbs/image/719/4bc/7fb/b7b7e1bdc_700x700_95_FIT.jpg';
-  private mainVideo = 'https://ext.fmkorea.com/files/attach/new/20200602/486616/621671337/2930476826/586284904d2f6afe1e4938236081186e.mp4';
+  private mainVideo = 'https://miiif-test.s3.ap-northeast-2.amazonaws.com/development/video/product/62204a80-4f30-11eb-9679-771bce042dd2/360_short.mp4';
+  private videoThumbnail = 'https://miiif-test.s3.ap-northeast-2.amazonaws.com/development/video/product/62204a80-4f30-11eb-9679-771bce042dd2/360.jpg';
   private activateTab = 0;
+  private player: any = null;
+  private videoOptions = {
+    autoPlay: true,
+    controls: true,
+    sources: [
+      {
+        src: this.mainVideo,
+        type: 'video/mp4',
+      },
+    ],
+  };
+
   /*
     About functions
   */
@@ -92,12 +109,12 @@ export default class HomePage extends Vue {
     }
   }
 
-  async mounted() {
-    videojs(this.$refs.Player);
-  }
-
   async created() {
     this.transActivateTab();
+  }
+
+  beforeDestroy() {
+    if(this.player) this.player.dispose();
   }
 
   // Data request
@@ -116,7 +133,17 @@ export default class HomePage extends Vue {
   isActiveTab(tabNumber: number) {
     return this.activateTab === tabNumber
       ? 'black'
-      : 'grey' 
+      : 'grey';
+  }
+
+  checkItemInViewport() {
+    if (this.$refs.videoPlayer) this.checkVideoInViewport();
+  }
+
+  async checkVideoInViewport() {
+    if (this.$refs.videoPlayer) {
+      return true;
+    }
   }
 
   // Page event

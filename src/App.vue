@@ -8,8 +8,12 @@
       <v-app-bar-nav-icon @click="navigationButton()"></v-app-bar-nav-icon>
       <v-toolbar-title class="app-bar-title">고기아찌 Beta ver.01</v-toolbar-title>
       <v-spacer></v-spacer>
-      <p class="app-bar-content"><span>로그인</span> 해주세요</p>
-      <v-btn>
+      <p @click="signInRouteButton()" v-if="!isLogin()" class="app-bar-content"><span>로그인</span> 해주세요</p>
+      <v-btn @click="signInRouteButton()" v-if="!isLogin()">
+        <v-icon large>mdi-account-circle</v-icon>
+      </v-btn>
+      <p v-if="isLogin()" class="app-bar-content"><span>Customer</span>님 반갑습니다</p>
+      <v-btn v-if="isLogin()">
         <v-icon large>mdi-account-circle</v-icon>
       </v-btn>
     </v-app-bar>
@@ -28,6 +32,12 @@
         </v-card-title>
         <v-card-text class="black white--text elevation-0 nav-content">
           질 좋고 맛있는 <span class="strong-text">소고기</span>, 바로 여기에
+        </v-card-text>
+        <v-card-text v-if="!isLogin()" class="black white--text elevation-0 nav-sub-content ma-0 pa-0">
+          안녕하세요 <span class="strong-text">고객</span>님, 먼저 로그인해주세요
+        </v-card-text>
+        <v-card-text v-if="isLogin()" class="black white--text elevation-0 nav-sub-content ma-0 pa-0">
+          <span class="strong-text">Customer</span>님, 반갑습니다
         </v-card-text>
       </v-card>
       <v-list
@@ -88,6 +98,7 @@
 <script lang="ts">
 // Common
 import { Component, Vue } from 'vue-property-decorator';
+import router from './router/index';
 
 // Structure
 
@@ -182,14 +193,31 @@ export default class App extends Vue {
     About functions
   */
   // Page lifecycle
+  created() {
+    const tokenDatas = {
+      accessToken: this.$cookies.get('access_token'),
+      refreshToken: this.$cookies.get('refresh_token'),
+    };
+
+    this.$store.dispatch('onBeforeReload', tokenDatas);
+  }
 
   // Data request
 
   // Data management
+  isLogin() {
+    return this.$store.state.auth !== undefined;
+  }
 
   // Page event
   navigationButton() {
     this.isNavigationDrawlerShow = !this.isNavigationDrawlerShow;
+  }
+
+  signInRouteButton() {
+    router.push({
+      path: '/auth/sign-in' 
+    });
   }
 }
 </script>
@@ -215,6 +243,7 @@ export default class App extends Vue {
   margin: auto 0 auto 0;
   font-weight: 500;
   font-size: 14px;
+  cursor: pointer;
 
   span {
     font-weight: 800;
@@ -228,6 +257,11 @@ export default class App extends Vue {
 
 .nav-content {
   font-size: 12px;
+  text-align: center;
+}
+
+.nav-sub-content {
+  font-size: 10px;
   text-align: center;
 }
 </style>
