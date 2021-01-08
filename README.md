@@ -2,14 +2,28 @@
 
 ## Spec
 ```
-Vue.js 2.x<br/>
-vue-cli 4.x<br/>
-Typescript<br/>
-vuex<br/>
-vue-router<br/>
-<br/>
+Vue.js 2.x
+vue-cli 4.x
+Typescript
+vuex
+vue-router
+
 vue-cookies
 video.js
+```
+
+## Function
+```
+로그인
+
+회원가입
+
+Auth
+
+비디오 재생
+
+상품목록
+
 ```
 
 ## Project setup
