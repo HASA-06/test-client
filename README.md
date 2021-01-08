@@ -2,6 +2,14 @@
 
 ## Spec
 ```
+Vue.js 2.x<br/>
+vue-cli 4.x<br/>
+Typescript<br/>
+vuex<br/>
+vue-router<br/>
+<br/>
+vue-cookies
+video.js
 ```
 
 ## Project setup
